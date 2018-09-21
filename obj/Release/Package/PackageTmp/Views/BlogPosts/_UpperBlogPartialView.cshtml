@@ -36,21 +36,11 @@
 
 </aside>
 
-
-
-
-
-
-
-
-
     <!-- Categories widget-->
     <aside class="widget widget_categories">
     <div class="widget-title"><a href="@Url.Action("Index", "Topics")">Categories</a></div>
 
-
             <ul>
-
 
                 @foreach (var topics in Model)
                 {
@@ -60,10 +50,7 @@
                     <li><a href="@Url.Action("Details", "Topics", new { id = topics.Id })">@Html.DisplayFor(modelItem => topics.TopicName) (@topics.Posts.Count())</a></li>
                     }
                 }
-                @*<li><a href="#">Business</a> (4)</li>
-                <li><a href="#">Health</a> (12)</li>
-                <li><a href="#">Lifestyle</a> (8)</li>
-                <li><a href="#">Sport</a> (16)</li>*@
+
             </ul>
  
 

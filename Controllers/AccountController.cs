@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ASGay_Portfolio.Models;
+using ASGay_Portfolio.Areas.BugTracker.Models;
 
 namespace ASGay_Portfolio.Controllers
 {
@@ -18,6 +19,8 @@ namespace ASGay_Portfolio.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private static ApplicationDbContext db = new ApplicationDbContext();
+        UserRolesHelper helper = new UserRolesHelper(db);
 
         public AccountController()
         {
@@ -56,13 +59,18 @@ namespace ASGay_Portfolio.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl, string Application)
         {
+            ViewBag.Application = Application;
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         //
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Register(RegisterViewModel model)
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -74,23 +82,158 @@ namespace ASGay_Portfolio.Controllers
                 return View(model);
             }
 
+            var ApplicationToLoginTo = model.Application;
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            //var ApplicationToLoginTo = Application;
+            if (ApplicationToLoginTo == "BugTracker")
             {
-                case SignInStatus.Success:
-                    return RedirectToAction("Index", "BlogPosts");
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToAction("Landing", "Home", new { area = "BugTracker" });
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
+            }
+
+            else if (ApplicationToLoginTo == "FinancialPlanner")
+            {
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToAction("Index", "Home", new { area = "FinancialPlanner" });
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
+            }
+
+            else if (ApplicationToLoginTo == "Blog")
+            {
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToAction("Index", "BlogPosts");
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
+           
+            }
+            else
+            {
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToAction("Index", "Home");
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
             }
         }
+
+
+        [AllowAnonymous]
+
+        public async Task<ActionResult> GuestLogin(string userName, string type)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var ApplicationToLoginTo = type;
+
+            var Password = "Login1111!";
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(userName, Password, false, shouldLockout: false);
+
+            if (ApplicationToLoginTo == "BugTracker")
+            {
+                switch (result)
+                {
+
+                    case SignInStatus.Success:
+                        return RedirectToAction("Landing", "Home", new { area = "BugTracker" });
+
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return RedirectToAction("Index");
+                }
+            }
+
+            else if (ApplicationToLoginTo == "FinancialPlanner")
+            {
+                switch (result)
+                {
+
+                    case SignInStatus.Success:
+                        return RedirectToAction("Index", "Home", new { area = "FinancialPlanner" });
+
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return RedirectToAction("Index");
+                }
+            }
+
+            else if (ApplicationToLoginTo == "Blog")
+            {
+                switch (result)
+                {
+
+                    case SignInStatus.Success:
+                        return RedirectToAction("Index", "Home", new { area = "Blog" });
+
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return RedirectToAction("Index");
+                }
+            }
+            
+            else
+            {
+                switch (result)
+                {
+
+                    case SignInStatus.Success:
+                        return RedirectToAction("Index", "Home");
+
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return RedirectToAction("Index");
+                }
+            }           
+        }
+
 
         //
         // GET: /Account/VerifyCode
@@ -138,8 +281,9 @@ namespace ASGay_Portfolio.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string Application)
         {
+            ViewBag.Application = Application;
             return View();
         }
 
@@ -156,6 +300,15 @@ namespace ASGay_Portfolio.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    if (model.Application != null)
+                    {
+                        if (model.Application == "BugTracker")
+                        {
+                            helper.AddUserToRole(user.Id, "Submitter");
+                            db.SaveChanges();
+                        }
+                    }
+                   
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -163,8 +316,26 @@ namespace ASGay_Portfolio.Controllers
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    
+                        if (model.Application != null)
+                        {
+                            if (model.Application == "BugTracker")
+                            {                            
+                                return RedirectToAction("Landing", "Home", new { area = "BugTracker" });
+                            }
 
-                    return RedirectToAction("Index", "BlogPosts");
+                        }                  
+                    
+                        if (model.Application == "Blog")
+                        {
+                            return RedirectToAction("Index", "Home", new { area = "Blog" });
+                        }
+                        if (model.Application == "FinancialPlanner")
+                        {
+                            return RedirectToAction("Index", "Home", new { area = "FinancialPlanner" });
+                        }
+              
+                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
@@ -417,10 +588,34 @@ namespace ASGay_Portfolio.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public ActionResult LogOff(string Application)
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "BlogPosts");
+
+
+            if (Application == "BugTracker")
+            {
+                return RedirectToAction("Index", "Home", new { area = "BugTracker" });
+            }
+            else if (Application == "FinancialPlanner")
+            {
+                return RedirectToAction("Index", "Home", new { area = "FinancialPlanner" });
+            }
+            else if (Application == "Blog")
+            {
+                return RedirectToAction("Index", "BlogPosts", new { area = "Blog" });
+            }
+            else if (Application == "Portfolio")
+            {
+                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+                //return Redirect("~/portfolio.html");               
+            }
+
+            else
+            {
+                return RedirectToAction("");
+            }
+            
         }
 
         //

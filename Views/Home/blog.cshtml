@@ -1,4 +1,6 @@
 ﻿@{Layout = null;}
+
+@using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -39,7 +41,84 @@
 		<div class="overlay-menu overlay-menu-animation font-serif"><a class="close-menu" href="#"><span class="ti-close"></span></a>
 			<div class="menu-table">
 				<div class="menu-table-cell">
-					<ul class="navigation">
+
+
+
+                    <ul class="navigation">
+                        <li class="menu-item-has-children">
+                            <a href="Home">Home</a>
+                            <ul class="sub-menu"></ul>
+                        </li>
+                        <li><a href="About/Home">About Me</a></li>
+                        <li class="menu-item-has-children">
+                            @if (Request.IsAuthenticated)
+                            {
+                                using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "Portfolio" }, FormMethod.Post, new { id = "logoutForm5" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a style="color:lime" href="javascript:document.getElementById('logoutForm4').submit()">Portfolio</a>
+                                }
+                            }
+                            else
+                            {
+                                <a style="color:lime" href="Portfolio/Home">Portfolio</a>
+
+                            }
+                            <ul class="sub-menu">
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "Portfolio" }, FormMethod.Post, new { id = "logoutForm4" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm4').submit()">Other</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a href="Portfolio/Home">Portfolio Home</a></li>
+
+                                }
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "Blog" }, FormMethod.Post, new { id = "logoutForm1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm1').submit()">Blog</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a href="Blog/BlogPosts/Index">Blog</a></li>
+                                }
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "FinancialPlanner" }, FormMethod.Post, new { id = "logoutForm2" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm2').submit()">Financial Planner</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a href="FinancialPlanner/Home">Financial Planner</a></li>
+                                }
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", new { area = "", Application = "BugTracker" }, FormMethod.Post, new { id = "logoutForm3" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <li><a style="font-family:Roboto,Arial, serif; font-size:12px; opacity: .8" href="javascript:document.getElementById('logoutForm3').submit()">Bug Tracker</a></li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li><a href="BugTracker/Home">Bug Tracker</a></li>
+                                }
+                            </ul>
+                        </li>
+                        <li><a href="Contact/Home">Contact</a></li>
+                    </ul><br />
+					@*<ul class="navigation">
 						<li class="menu-item-has-children"><a href="~/index.html">Home</a>
 							<ul class="sub-menu">
 							
@@ -56,9 +135,13 @@
 								
 							</ul>
 						</li>
+                        <li class="menu-item-has-children">
+                            <a href="FinancialPlanner/Home">Financial Planner</a>
+                            <ul class="sub-menu"></ul>
+                        </li>
 						<li><a href="~/contact.html">Contact</a></li>
 						
-							</ul>
+							</ul>*@
 						</li>
 					</ul>
 				</div>

@@ -40,7 +40,10 @@ namespace ASGay_Portfolio
                 name: "Default2",
                 //url: "index.html"
                 url: "{controller}/{action}/{id}",
-                defaults: new { url = "index.html", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new string[] { "ASGay_Portfolio.Controllers" }
+
+                //defaults: new { url = "index.html", id = UrlParameter.Optional }
                 //defaults: new { controller = "index.html", action = UrlParameter.Optional, id = UrlParameter.Optional }
             );
 

@@ -60,6 +60,10 @@
                     <li class="menu-item-has-children">                        
                         <a href="@Url.Action("Index", "BlogPosts")">Blog</a>  
                     </li>
+                    <li class="menu-item-has-children">
+                        <a href="FinancialPlanner/Home">Financial Planner</a>
+                        <ul class="sub-menu"></ul>
+                    </li>
                     <li><a href="~/contact.html">Contact</a></li>                  
                 </ul>
             </div>
@@ -88,244 +92,250 @@
     <!-- Header end-->
     <div class="wrapper">
         <!-- Page Header-->
-        <section class="module-header parallax bg-dark" data-background="@Url.Content(Model.MediaURL)" alt="">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1 class="font-serif m-b-10"> @Html.DisplayFor(model => model.Title) </h1>
-                        <ul class="post-meta">
-                            <li>@Html.DisplayFor(model => model.createdDate) </ li >
-                           <li><a href="#">
-                                @foreach (var topics in Model.Topics.Take(3))
-                                {
-                                    @Html.DisplayFor(modelItem => topics.TopicName)<span>&nbsp;</span>
-                                }
-                            </a></li>                              
+        @*<img src="~/NEWIMAGES/3af94368-cdab-4157-b48d-d8aa32010bc6campgrandesingabb_2017011985447.jpg" />*@
+        @*<section class="module-header parallax bg-dark" data-background="../NEWIMAGES/3af94368-cdab-4157-b48d-d8aa32010bc6campgrandesingabb_2017011985447.jpg">*@
+            @*<section class="module-header parallax bg-dark" data-background="../NEWIMAGES/8a76a255-530f-4590-9517-490d69b690fbIMG_3513.jpg">*@
+                @*../NEWIMAGES/8a76a255-530f-4590-9517-490d69b690fbIMG_3513 (3).JPG*@
 
-                            <li><a href="#comments">@Model.Comments.Count Comments</a></li>
-                        </ul>
+                <section class="module-header parallax bg-dark" data-background="@Url.Content(Model.MediaURL)" alt="">
+                @*<div class="post-preview"><a href="#"><img src="@Url.Content(Model.MediaURL)" alt=""></a></div>*@
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1 class="font-serif m-b-10"> @Html.DisplayFor(model => model.Title) </h1>
+                            <ul class="post-meta">
+                                <li>@Html.DisplayFor(model => model.createdDate) </ li >
+                                <li>
+                                    <a href="#">
+                                        @foreach (var topics in Model.Topics.Take(3))
+                                        {
+                                            @Html.DisplayFor(modelItem => topics.TopicName)<span>&nbsp;</span>
+                                        }
+                                    </a>
+                                </li>
+
+                                <li><a href="#comments">@Model.Comments.Count Comments</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <!-- Page Header end-->
-        <!-- Single post-->
-        <section class="module">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-8 well">
-                        <!-- Post-->
-                        <article class="post">
-                            <div class="post-content">                                                                      
+            </section>
+            <!-- Page Header end-->
+            <!-- Single post-->
+            <section class="module">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 well">
+                            <!-- Post-->
+                            <article class="post">
+                                <div class="post-content">
 
 
-                                @*<p><img src="~/assets/images/blog/1.jpg" alt=""></p>*@<span class="ti-marker-alt"></span>
-                                <h4> @Html.DisplayFor(model => model.Title)</h4>@Html.DisplayFor(model => model.createdDate)<br /><br />
-                                
+                                    @*<p><img src="~/assets/images/blog/1.jpg" alt=""></p>*@<span class="ti-marker-alt"></span>
+                                    <h4> @Html.DisplayFor(model => model.Title)</h4>@Html.DisplayFor(model => model.createdDate)<br /><br />
 
-                                @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
-                                {
-                                    @Html.ActionLink("Edit Post", "Edit", new { id = Model.Id })<br />
 
-                                    @Html.ActionLink("Delete Post", "Delete", new { id = Model.Id })<br /><br />
-                                }
-                                <p>@Html.Raw(Model.Body)</p>
-                              
-                            </div>
-                            <div class="post-footer">
-
-                                <div class="post-tags">
-                                    @foreach (var topics in Model.Topics)
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                                     {
-                                        <a href="@Url.Action("Details", "Topics", new { id = topics.Id })">@Html.DisplayFor(modelItem => topics.TopicName)</a>
+                                        @Html.ActionLink("Edit Post", "Edit", new { id = Model.Id })<br />
+
+                                        @Html.ActionLink("Delete Post", "Delete", new { id = Model.Id })<br /><br />
                                     }
-                                    
+                                    <p>@Html.Raw(Model.Body)</p>
+
                                 </div>
-                            </div>
-                        </article>
-                        <!-- Post end-->
-                        <!-- Comments area-->
-                        <div class="comments-area">
+                                <div class="post-footer">
+
+                                    <div class="post-tags">
+                                        @foreach (var topics in Model.Topics)
+                                        {
+                                            <a href="@Url.Action("Details", "Topics", new { id = topics.Id })">@Html.DisplayFor(modelItem => topics.TopicName)</a>
+                                        }
+
+                                    </div>
+                                </div>
+                            </article>
+                            <!-- Post end-->
+                            <!-- Comments area-->
+                            <div class="comments-area">
 
 
-                            @if (@Model.Published == false)
-                            {
-                                @Html.ActionLink("PUBLISH", "PublishPending", new { PendingPostId = Model.Id })<br />
+                                @if (@Model.Published == false)
+                                {
+                                    @Html.ActionLink("PUBLISH", "PublishPending", new { PendingPostId = Model.Id })<br />
 
-                            }
-                            <hr style="height:2px;border:none;color:#333;background-color:#a19f9f;" />
-                            <h5 class="comments-title">@Model.Comments.Count Comments </h5>
+                                }
+                                <hr style="height:2px;border:none;color:#333;background-color:#a19f9f;" />
+                                <h5 class="comments-title">@Model.Comments.Count Comments </h5>
 
-                            <div class="comment-list">
-                                <!-- Comment-->
+                                <div class="comment-list">
+                                    <!-- Comment-->
 
-                                @foreach (var comment in Model.Comments)
-                                {                                    
-                                    <div class="comment" id="comments">
-                                        <div class="comment-author"><img class="avatar" src="~/assets/images/avatar/1.jpg" alt=""></div>
-                                        <div class="comment-body">
-                                            <div class="comment-meta">
-                                                <div class="comment-meta-author"><a href="#"><p>@comment.Commenter.FirstName</a></div>
-                                                <div class="comment-meta-date">
-                                                    <a href="#">
-                                                        @*<time datetime="1914-12-20">@comment.createdDate</time>*@
-                                                        <time datetime="2015-05-05T04:51:41+00:00">@comment.createdDate); </time>
-                                                        @*<p>@comment.createdDate.ToString("dd-MM-yyy"); </p>*@
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="comment-content">
-                                                <span>@Html.Raw(comment.Body)</span>
-                                                @if(User.IsInRole("Admin")|| User.IsInRole("Moderator"))
-                                                                {
-                                                    <div class="row">
-                                                        <div class="col-md-9"></div>
-                                                        <div class="col-md-3">
-                                                            <span>@Html.ActionLink("Edit Comment", "EditComment", new { id = comment.Id })</span>
-                                                            <span>@Html.ActionLink("Delete Comment", "DeleteComment", new { id = comment.Id }) </span><br />
-                                                        </div>
+                                    @foreach (var comment in Model.Comments)
+                                    {
+                                        <div class="comment" id="comments">
+                                            <div class="comment-author"><img class="avatar" src="~/assets/images/avatar/1.jpg" alt=""></div>
+                                            <div class="comment-body">
+                                                <div class="comment-meta">
+                                                    <div class="comment-meta-author"><a href="#"><p>@comment.Commenter.FirstName</a></div>
+                                                    <div class="comment-meta-date">
+                                                        <a href="#">
+                                                            @*<time datetime="1914-12-20">@comment.createdDate</time>*@
+                                                            <time datetime="2015-05-05T04:51:41+00:00">@comment.createdDate); </time>
+                                                            @*<p>@comment.createdDate.ToString("dd-MM-yyy"); </p>*@
+                                                        </a>
                                                     </div>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <span>@Html.Raw(comment.Body)</span>
+                                                    @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-9"></div>
+                                                            <div class="col-md-3">
+                                                                <span>@Html.ActionLink("Edit Comment", "EditComment", new { id = comment.Id })</span>
+                                                                <span>@Html.ActionLink("Delete Comment", "DeleteComment", new { id = comment.Id }) </span><br />
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                                @*<input class="form-control" type="search" placeholder="Hit enter search...">
+                                                <button class="search-button" type="submit"><span class="ti-basketball"></span></button>*@
+
+                                                @if (Request.IsAuthenticated)
+                                                {
+                                                    using (Html.BeginForm("CommentReply", "Comments", new { CommentId = comment.Id }, FormMethod.Post, null))
+                                                    {
+                                                        <input name="Body" type="text" class="form-control" placeholder="reply to comment" />
+                                                        <button class="search-button" type="submit"><span class="ti-basketball"></span></button>
+                                                        @*<input class="btn btn-brand" type="submit" value="Reply" />*@
+                                                    }
                                                 }
 
+
                                             </div>
-                                            @*<input class="form-control" type="search" placeholder="Hit enter search...">
-                                            <button class="search-button" type="submit"><span class="ti-basketball"></span></button>*@
-
-                                        @if (Request.IsAuthenticated)
+                                            @foreach (var reply in comment.Replies)
                                             {
-                                            using (Html.BeginForm("CommentReply", "Comments", new { CommentId = comment.Id }, FormMethod.Post, null))
-                                            {
-                                                <input name="Body" type="text" class="form-control" placeholder="reply to comment" />
-                                                <button class="search-button" type="submit"><span class="ti-basketball"></span></button>
-                                                @*<input class="btn btn-brand" type="submit" value="Reply" />*@
-                                            }
-                                            }
-
-
-                                        </div>
-                                        @foreach (var reply in comment.Replies)
-                                        {
 
 
                                         <!-- Subcomment-->
-                                            <div class="children">
-                                                <div class="comment">
-                                                    <div class="comment-author"><img class="avatar" src="~/assets/images/avatar/2.jpg" alt=""></div>
-                                                    <div class="comment-body">
-                                                        <div class="comment-meta">
+                                                <div class="children">
+                                                    <div class="comment">
+                                                        <div class="comment-author"><img class="avatar" src="~/assets/images/avatar/2.jpg" alt=""></div>
+                                                        <div class="comment-body">
+                                                            <div class="comment-meta">
 
-                                                            <div class="comment-meta-author"><a href="#">@reply.Replier.FirstName</a></div>
-                                                            <div class="comment-meta-date">
-                                                                <a href="#">
-                                                                    <time datetime="2015-05-05T04:51:41+00:00">@reply.createdDate</time>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="comment-content">
-                                                            <span>@reply.Body</span>
-                                                            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
-                                                            {
-                                                                <div class="row">
-                                                                    <div class="col-md-9"></div>
-                                                                    <div class="col-md-3">
-                                                                        <span>@Html.ActionLink("Edit Reply", "EditReply", new { id = reply.Id })</span>
-                                                                        <span>@Html.ActionLink("Delete Reply", "DeleteReply", new { id = reply.Id }) </span><br />
-                                                                    </div>
+                                                                <div class="comment-meta-author"><a href="#">@reply.Replier.FirstName</a></div>
+                                                                <div class="comment-meta-date">
+                                                                    <a href="#">
+                                                                        <time datetime="2015-05-05T04:51:41+00:00">@reply.createdDate</time>
+                                                                    </a>
                                                                 </div>
-                                                            }
+                                                            </div>
+                                                            <div class="comment-content">
+                                                                <span>@reply.Body</span>
+                                                                @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                                                                {
+                                                                    <div class="row">
+                                                                        <div class="col-md-9"></div>
+                                                                        <div class="col-md-3">
+                                                                            <span>@Html.ActionLink("Edit Reply", "EditReply", new { id = reply.Id })</span>
+                                                                            <span>@Html.ActionLink("Delete Reply", "DeleteReply", new { id = reply.Id }) </span><br />
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+
                                                         </div>
-                                                    
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
-                                    </div>
+                                            }
+                                        </div>
+                                    }
+                                    <!-- Comment-->
+
+                                </div>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <h4>Leave a comment</h4>
+                                    using (Html.BeginForm("CreateComment", "Comments", new { PostId = Model.Id }, FormMethod.Post, null))
+                                    {  // use comment controller?
+                                        @*<input type="hidden" name="PostId" value="@Model.Id"/>*@  // replaced this with the new post id = model.id above
+                                                                                                    @Html.AntiForgeryToken()
+                                                                                                    <div class="form-group col-sm-12">
+                                                                                                        <textarea class="form-control" rows="8" placeholder="Comment *" name="Body"></textarea>
+                                                                                                        <input class="btn btn-brand" type="submit" value="Post Comment">
+                                                                                                    </div>
+
+                                    }
                                 }
-                                <!-- Comment-->
-                             
+                                else
+                                {
+
+                                    <p style="font-variant:small-caps">@Html.ActionLink("Login to Add Comments", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</p><br /><br />
+                                }
+
+                                @Html.ActionLink("Back to List", "Index")
+
+
+
+
+
+
+
+
                             </div>
-                            @if (Request.IsAuthenticated)
-                            {
-                                <h4>Leave a comment</h4>
-                                using (Html.BeginForm("CreateComment", "Comments", new { PostId = Model.Id }, FormMethod.Post, null))
-                                {  // use comment controller?
-                                    @*<input type="hidden" name="PostId" value="@Model.Id"/>*@  // replaced this with the new post id = model.id above
-                                                                                                @Html.AntiForgeryToken()
-                                                                                                <div class="form-group col-sm-12">
-                                                                                                    <textarea class="form-control" rows="8" placeholder="Comment *" name="Body"></textarea>
-                                                                                                    <input class="btn btn-brand" type="submit" value="Post Comment">
-                                                                                                </div>
-
-                                }
-                            }
-                            else
-                            {
-                                
-                                <p style="font-variant:small-caps">@Html.ActionLink("Login to Add Comments", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</p><br /><br />
-                            }
-
-                            @Html.ActionLink("Back to List", "Index")
-                         
-
-
-                          
-                           
-
-
-
+                            <!-- Comments area end-->
                         </div>
-                        <!-- Comments area end-->
+                        <!-- Sidebar-->
+
+
+
+                        <div class="col-sm-4">
+                            <div class="sidebar">
+
+
+
+
+
+
+
+                                <div class="well">@{Html.RenderAction("BlogPartialUpper", "BlogPosts"); }</div>
+                                <div class="well">@{Html.RenderAction("BlogPartialMid", "BlogPosts");}</div>
+
+                                <div class="well">@{Html.RenderAction("BlogPartialLower", "BlogPosts"); }</div>
+                                <div class="well">@{Html.RenderAction("BlogPartialLowLower", "BlogPosts");}</div>
+
+
+                            </div>
+                        </div>
+
+
+                        <!-- Sidebar end-->
                     </div>
-                    <!-- Sidebar-->
 
+                </div>
+            </section>
 
-
-                    <div class="col-sm-4">
-                        <div class="sidebar">
-
-                          
-
-
-         
-
-
-                            <div class="well">@{Html.RenderAction("BlogPartialUpper", "BlogPosts"); }</div>
-                            <div class="well">@{Html.RenderAction("BlogPartialMid", "BlogPosts");}</div>
-                        
-                            <div class="well">@{Html.RenderAction("BlogPartialLower", "BlogPosts"); }</div>
-                            <div class="well">@{Html.RenderAction("BlogPartialLowLower", "BlogPosts");}</div>
-
+            <!-- Single post end-->
+            <!-- Footer-->
+            <footer class="footer parallax" data-background="@Url.Content(Model.MediaURL)">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ul class="social-list m-b-40"></ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
 
                         </div>
                     </div>
-
-                   
-                    <!-- Sidebar end-->
                 </div>
-
-            </div>
-        </section>
-
-        <!-- Single post end-->
-        <!-- Footer-->
-        <footer class="footer parallax" data-background="@Url.Content(Model.MediaURL)">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <ul class="social-list m-b-40">
-                       
-                        </ul>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                       
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Footer end-->
-    </div>
+            </footer>
+            <!-- Footer end-->
+</div>
     <!-- Scripts-->
     <script src="~/assets/js/jquery-2.2.4.min.js"></script>
     <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>

@@ -207,37 +207,9 @@
                 <div class="row">
                     <!-- Content-->
 
-                    @*@using (Html.BeginForm("Search", "BlogPosts"))
-                    {
-                        <input type="text" name="query" value="@ViewBag.Query" placeholder="Search Blog" class="form-control" style="width:150px" /><button type="submit" class="btn btn-primary">Go</button>
-                    }*@
-
-                    @*@using Microsoft.AspNet.Identity
-                    @if (Request.IsAuthenticated)
-                    {
-                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                                </li>
-                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                            </ul>
-                        }
-                    }
-                    else
-                    {
-                        <ul class="nav navbar-nav navbar-right" style="padding-right:25px">
-                            <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-                        </ul>
-                    }*@
+                  
                     <div class="col-sm-8 well">
-                        @*@{
-                            var user = User.IsInRole("Admin");
-                            var userid = User.Identity.GetUserId();
-                        }*@
+                        
                         <!-- Post-->
                         @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                         {
@@ -305,87 +277,23 @@
 
                                 <hr style="height:2px;border:none;color:#333;background-color:#808080;" />
 
-                                @*@if (User.IsInRole("Admin"))
-                                {
-                                    <hr />
-                                    @Html.ActionLink("Edit Post", "Edit", new { id = item.Id })<br />
-                                    @Html.ActionLink("Details", "Details", new { Slug = item.Slug })<br />
-                                    @Html.ActionLink("Delete Post", "Delete", new { id = item.Id })
-                                }*@
+                             
                             </article>
                         
                         }
                         }
                         <!-- Post end-->
                         <!-- Post-->
-                        @*<article class="post">
-                            <div class="post-preview"><a href="#"><img src="~/assets/images/blog/2.jpg" alt=""></a></div>
-                            <div class="post-header">
-                                <h2 class="post-title"><a href="~/blog-single.html">Minimalist Chandelier</a></h2>
-                                <ul class="post-meta">
-                                    <li>August 18, 2016</li>
-                                    <li><a href="#">Branding</a>, <a href="#">Design</a></li>
-                                    <li><a href="#">3 Comments</a></li>
-                                </ul>
-                            </div>
-                            <div class="post-content">
-                                <p>Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Seitan High Life reprehenderit consectetur cupidatat kogi about me.</p>
-                            </div>
-                            <div class="post-more"><a href="#">Read More →</a></div>
-                        </article>
-                        <!-- Post end-->
-                        <!-- Post-->
-                        <article class="post">
-                            <div class="post-preview"><a href="#"><img src="~/assets/images/blog/3.jpg" alt=""></a></div>
-                            <div class="post-header">
-                                <h2 class="post-title"><a href="~/blog-single.html">Cake's Inspiration</a></h2>
-                                <ul class="post-meta">
-                                    <li>August 18, 2016</li>
-                                    <li><a href="#">Branding</a>, <a href="#">Design</a></li>
-                                    <li><a href="#">3 Comments</a></li>
-                                </ul>
-                            </div>
-                            <div class="post-content">
-                                <p>Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Seitan High Life reprehenderit consectetur cupidatat kogi about me.</p>
-                            </div>
-                            <div class="post-more"><a href="#">Read More →</a></div>
-                        </article>
-                        <!-- Post end-->
-                        <!-- Post-->
-                        <article class="post">
-                            <div class="post-preview"><a href="#"><img src="~/assets/images/blog/4.jpg" alt=""></a></div>
-                            <div class="post-header">
-                                <h2 class="post-title"><a href="~/blog-single.html">Explore Different Options</a></h2>
-                                <ul class="post-meta">
-                                    <li>August 18, 2016</li>
-                                    <li><a href="#">Branding</a>, <a href="#">Design</a></li>
-                                    <li><a href="#">3 Comments</a></li>
-                                </ul>
-                            </div>
-                            <div class="post-content">
-                                <p>Meh synth Schlitz, tempor duis single-origin coffee ea next level ethnic fingerstache fanny pack nostrud. Seitan High Life reprehenderit consectetur cupidatat kogi about me.</p>
-                            </div>
-                            <div class="post-more"><a href="#">Read More →</a></div>
-                        </article>*@
+                      
                         <!-- Post end-->
                         <!-- Pagination-->
                         <div class="row">
                             <div class="col-sm-12">
-                                @*<ul class="pagination">
-                                    <li class="next"><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li class="prev"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                                </ul>*@
+                         
                             </div>
                         </div>
                         <div>
-                            @*<center>*@
-                            @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))*@
-                            @*</center>*@
+                         
                         </div>
                         <!-- Pagination end-->
                     </div>
@@ -394,73 +302,11 @@
                     <div class="col-sm-4">
                         <div class="sidebar">
                             <!-- Search widget-->
-                            @*<aside class="widget widget_search">
-                                <br /><br />
-                                @using (Html.BeginForm("Search", "BlogPosts"))
-                                {
-
-                                    @*<input type="text" name="query" value="@ViewBag.Query" placeholder="Search Blog" class="form-control" style="width:150px" /><button type="submit" class="btn btn-primary">Go</button>
-                                    <input class="form-control" type="search" placeholder="Search Blog" value="@ViewBag.Query" name="query">
-                                    <button class="search-button" type="submit"><span class="ti-search"></span></button>
-                                }
-
-                            </aside>*@
+                         
 
                             <!-- Categories widget-->
-                            @*<aside class="widget widget_categories">
-                                <div class="widget-title">Categories</div>
-                                <ul>
-                                    <li><a href="#">Business</a> (4)</li>
-                                    <li><a href="#">Health</a> (12)</li>
-                                    <li><a href="#">Lifestyle</a> (8)</li>
-                                    <li><a href="#">Sport</a> (16)</li>
-                                </ul>
-                            </aside>
-
-                            <!-- Recent entries widget-->
-                            <aside class="widget widget_recent_entries_custom">
-                                <div class="widget-title">Popular Posts</div>
-                                <ul>
-                                    <li class="clearfix">
-                                        <div class="wi"><a href="#"><img src="~/assets/images/widgets/1.jpg" alt=""></a></div>
-                                        <div class="wb"><a href="#">6 Ways to Be More Productive</a> <span class="post-date">May 8, 2016</span></div>
-                                    </li>
-                                    <li class="clearfix">
-                                        <div class="wi"><a href="#"><img src="~/assets/images/widgets/2.jpg" alt=""></a></div>
-                                        <div class="wb"><a href="#">3 Tips to Align Your Startup</a> <span class="post-date">May 8, 2016</span></div>
-                                    </li>
-                                    <li class="clearfix">
-                                        <div class="wi"><a href="#"><img src="~/assets/images/widgets/3.jpg" alt=""></a></div>
-                                        <div class="wb"><a href="#">Mini California Sushi Cones</a> <span class="post-date">May 8, 2016</span></div>
-                                    </li>
-                                </ul>
-                            </aside>
-
-                            <!-- Recent portfolio widget-->
-                            <aside class="widget widget_recent_works">
-                                <div class="widget-title">Recent Portfolio</div>
-                                <ul>
-                                    <li><a href="#"><img src="~/assets/images/widgets/4.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="~/assets/images/widgets/5.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="~/assets/images/widgets/6.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="~/assets/images/widgets/7.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="~/assets/images/widgets/8.jpg" alt=""></a></li>
-                                    <li><a href="#"><img src="~/assets/images/widgets/9.jpg" alt=""></a></li>
-                                </ul>
-                            </aside>
-
-                            <!-- Twitter widget-->
-                            <div class="widget twitter-feed-widget">
-                                <div class="widget-title">Twitter Feed</div>
-                                <div class="twitter-feed" data-twitter="345170787868762112" data-number="2"></div>
-                            </div>
-
-                            <!-- Tags widget-->
-                            <aside class="widget widget_tag_cloud">
-                                <div class="widget-title">Tags</div>
-                                <div class="tagcloud"><a href="#">bootstrap</a><a href="#">business</a><a href="#">corporate</a><a href="#">e-commerce</a><a href="#">portfolio</a><a href="#">responsive</a></div>
-                            </aside>*@
-                            @*<p style=""><br /><br />Administrator Login</p>*@
+                          
+                       
                             <div class="well">
                                 @{Html.RenderAction("BlogPartialUpper", "BlogPosts"); }
                             </div>
@@ -489,14 +335,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        @*<ul class="social-list m-b-40">
-                                <li><a href="#">Facebook</a></li>
-                                <li><a href="#">Google plus</a></li>
-                                <li><a href="#">Twitter</a></li>
-                                <li><a href="#">Instagram</a></li>
-                                <li><a href="#">Linkedin</a></li>
-                                <li><a href="#">Dribbble</a></li>
-                            </ul>*@
+                    
                     </div>
                 </div>
                 <div class="row">

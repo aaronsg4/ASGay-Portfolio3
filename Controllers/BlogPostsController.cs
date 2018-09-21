@@ -168,7 +168,7 @@ namespace ASGay_Portfolio.Controllers
                 }
                 else
                 {
-                   /*ViewBag.*/ErrorMessage = "Please select an image between 1KB-2MB and in an approved format (.jpg, .bmp, .png, .gif)";
+                    ViewBag.ErrorMessage = "Please select an image between 1KB-2MB and in an approved format (.jpg, .bmp, .png, .gif)";
 
 
 

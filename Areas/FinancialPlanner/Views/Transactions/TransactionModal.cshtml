@@ -1,0 +1,120 @@
+﻿@model ASGay_Portfolio.Areas.FinancialPlanner.Models.Transaction
+@{ Layout = null;}
+@using Microsoft.AspNet.Identity
+
+
+@{ var userid = User.Identity.GetUserId();
+
+}
+
+
+@{
+    ViewBag.Title = "TransactionModal";
+}
+
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+<style>
+    ul.ui-autocomplete {
+        z-index: 1100;
+    }
+</style>
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><img src="~/img/fp.png" /></h4>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <p>
+                    @ViewBag.AccountAlert
+                </p><br />
+                <p>@ViewBag.BudgetAlert</p>
+            </div>
+        </div>
+      @if (ViewBag.AccountAlert == null && ViewBag.BudgetAlert == null)
+      {
+            <h2></h2>
+            using (Html.BeginForm("CreateBudgetTransaction", "Transactions"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <h4>Enter a transaction below</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        &nbsp;&nbsp;&nbsp;  Transaction Description
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        &nbsp;&nbsp;&nbsp; How much was this transaction for?
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        &nbsp;&nbsp;&nbsp;Was this a debit or a credit?
+                        <div class="col-md-10">
+                            @Html.DropDownList("TransactionTypeId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TransactionTypeId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        &nbsp;&nbsp;&nbsp;Find the type of transaction below or enter a new category
+                        <div class="col-md-10">
+                            @*@Html.DropDownList("TransactionCategoryId", null, htmlAttributes: new { @class = "form-control" })*@
+                            @Html.TextBox("TransactionCategoryName", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TransactionCategory, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        &nbsp;&nbsp;&nbsp;Which of your budgets was the transaction for?
+                        <div class="col-md-10">
+                            @Html.DropDownList("BudgetId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.BudgetId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        &nbsp;&nbsp;&nbsp; Which of your accounts did you use?
+                        <div class="col-md-10">
+                            @Html.DropDownList("FinancialAccountId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FinancialAccountId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+
+            <a type="button" class="btn" style="color:white; background-color:#c5601f; width:200px; margin-bottom:7px" href="@Url.Action("Create", "FinancialAccounts")" data-toggle="modal" data-target="#myModal2">Add Accounts</a><br />
+            <a type="button" class="btn btn-default" style="color:white; width:150px; margin-bottom:7px" href="@Url.Action("Create", "FinancialAccounts")" data-toggle="modal" data-target="#myModalAccountCreate">Add Accounts</a><br />
+            <a type="button" class="btn btn-default" style="color:white; width:150px; margin-bottom:7px" href="@Url.Action("BudgetsCreateModal","Budgets", new { id = userid })" data-toggle="modal" data-target="#myModal1">Create a New Budget</a><br />
+        }
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>
+<script src="~/js/jquery.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#TransactionCategoryName').autocomplete({
+            source: '@Url.Action("CatDropdown", "Budgets")'
+        });
+    });
+</script>

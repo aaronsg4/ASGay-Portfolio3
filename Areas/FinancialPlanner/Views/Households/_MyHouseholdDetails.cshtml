@@ -1,0 +1,39 @@
+﻿@model ASGay_Portfolio.Areas.FinancialPlanner.Models.Household
+@{
+    ViewBag.Title = "_MyHouseholdDetails";
+}
+@if (Model != null)
+{
+    <ul class="dropdown-menu">
+
+        @if (Request.IsAuthenticated)
+        {
+            <li><a href="@Url.Action("BudgetHousehold", "Budgets", new { id = Model.Id })">My Household</a></li>
+        }
+        else
+        {
+            <li><a href="@Url.Action("Login", "Account",  new { area = "" })">Login</a></li>
+            <li><a href="@Url.Action("Register", "Account",  new { area = "" })">Register</a></li>
+        }
+    </ul>
+}
+else
+{
+    <ul class="dropdown-menu">
+        @if (Request.IsAuthenticated)
+        {
+            <li><a href="@Url.Action("Details", "Households")">My Household</a></li>
+        }
+        else
+        {
+            <li><a href="@Url.Action("Login", "Account",  new { area = "" })">Login</a></li>
+            <li><a href="@Url.Action("Register", "Account",  new { area = "" })">Register</a></li>
+        }
+    </ul>
+}
+
+
+
+
+
+

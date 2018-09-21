@@ -1,4 +1,6 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -8,6 +10,9 @@
 		<meta name="author" content="">
 		<title>ASGay</title>
 		<!-- Favicons-->
+
+  
+
 		<link rel="shortcut icon" href="assets/images/favicon.png">
 		<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-touch-icon-72x72.png">
@@ -43,47 +48,52 @@
 				<div class="menu-table-cell">
 					<ul class="navigation">
 						<li class="menu-item-has-children"><a href="index.html">Home</a>
-							<ul class="sub-menu">
-								<!--<li><a href="index.html">Parallax</a></li>-->
-								<!--<li><a href="index-5.html">Parallax 2</a></li>
-								<li><a href="index-2.html">Parallax Dark</a></li>
-								<li><a href="index-6.html">Parallax Dark 2</a></li>
-								<li><a href="index-3.html">Youtube</a></li>
-								<li><a href="index-7.html">Youtube 2</a></li>
-								<li><a href="index-4.html">Vimeo</a></li>
-								<li><a href="index-8.html">Vimeo 2</a></li>-->
+							<ul class="sub-menu">								
 							</ul>
 						</li>
-						<li><a href="about.html">About</a></li>
+
+						<li><a href="about.html">About Me</a></li>
+
 						<li class="menu-item-has-children"><a href="portfolio.html">Portfolio</a>
-							<ul class="sub-menu">
-								<!--<li><a href="portfolio-single.html">Stack</a></li>
-								<li><a href="portfolio-single-2.html">Gallery</a></li>
-								<li><a href="portfolio-single-3.html">Slides</a></li>-->
+							<ul class="sub-menu">							
 							</ul>
 						</li>
-						<li class="menu-item-has-children"><a href="BlogPosts/Index">Blog</a>
-							<ul class="sub-menu">
-								<!--<li><a href="blog.html">Classic</a></li>
-								<li><a href="blog-masonry-2.html">Masonry 2 cols</a></li>
-								<li><a href="blog-masonry.html">Masonry 3 cols</a></li>
-								<li><a href="blog-single.html">Single Post</a></li>-->
+
+                        <li><a href="contact.html">Contact</a></li>
+						
+					</ul><br />
+
+                    <ul class="navigation">
+                       
+
+                        <li><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span><span class="ti-more"></span></li>
+
+                    </ul><br /><br /><br /><br />
+
+                    <ul class="navigation">					
+						<li class="menu-item-has-children"><a href="Blog/BlogPosts/Index">Blog</a>
+							<ul class="sub-menu">							
 							</ul>
-						</li>
-						<li><a href="contact.html">Contact</a></li>
-						<!--<li class="menu-item-has-children"><a href="#">Shortcodes</a>
-							<ul class="sub-menu">
-								<li><a href="shortcodes-buttons.html">Buttons</a></li>
-								<li><a href="shortcodes-grid.html">Typography & Columns</a></li>
-								<li><a href="shortcodes-modules.html">Modules</a></li>
-								<li><a href="shortcodes-iconbox.html">Icon with text</a></li>
-								<li><a href="shortcodes-bars.html">Progress bars</a></li>
-								<li><a href="shortcodes-piechart.html">Pie chart</a></li>
-								<li><a href="shortcodes-tabs.html">Tabs</a></li>
-								<li><a href="shortcodes-widgets.html">Widgets</a></li>
-							</ul>
-						</li>-->
-					</ul>
+						</li>					
+					</ul><br />
+                    <ul class="navigation">                       
+                        <li class="menu-item-has-children">
+                         
+                            @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))                          
+                            {
+                            @Html.AntiForgeryToken()                            
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Financial Planner</a></li>                         
+                            }
+                            <!--<a href="FinancialPlanner/Home"></a>
+                            <ul class="sub-menu"></ul>-->
+                        </li>                        
+                    </ul><br />
+                    <ul class="navigation">                        
+                        <li class="menu-item-has-children">
+                            <a href="BugTracker/Home">Bug Tracker</a>
+                            <ul class="sub-menu"></ul>
+                        </li>
+                    </ul>
 				</div>
 			</div>
 		</div>
